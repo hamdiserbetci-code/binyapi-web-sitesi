@@ -1,0 +1,2736 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes"/>
+    <title>Binyapı Emlak Geliştirme İnşaat Ticaret Ltd. Şti.</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .header.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #2c5aa0;
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-menu a:hover {
+            color: #2c5aa0;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #2c5aa0;
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #333;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            height: auto;
+            background: linear-gradient(135deg, rgba(44, 90, 160, 0.9), rgba(44, 90, 160, 0.7)), 
+                        url('https://static.vecteezy.com/system/resources/previews/012/809/213/non_2x/construction-residential-new-house-in-progress-at-building-site-housing-estate-development-photo.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: scroll;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Construction Animation */
+        .construction-animation {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .crane {
+            position: absolute;
+            right: 10%;
+            bottom: 0;
+            width: 200px;
+            height: 400px;
+            z-index: 2;
+        }
+
+        .crane-base {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 300px;
+            background: linear-gradient(to bottom, #666, #444);
+            border-radius: 2px;
+        }
+
+        .crane-arm {
+            position: absolute;
+            bottom: 280px;
+            left: 50%;
+            transform-origin: 0 0;
+            width: 150px;
+            height: 8px;
+            background: linear-gradient(to right, #666, #555);
+            border-radius: 4px;
+            animation: craneRotate 20s linear infinite;
+        }
+
+        .crane-hook {
+            position: absolute;
+            right: 0;
+            top: 8px;
+            width: 4px;
+            height: 60px;
+            background: #333;
+            animation: craneHook 8s ease-in-out infinite;
+        }
+
+        .crane-load {
+            position: absolute;
+            right: -8px;
+            bottom: -20px;
+            width: 20px;
+            height: 20px;
+            background: #ff6b35;
+            border-radius: 2px;
+            animation: craneLoad 8s ease-in-out infinite;
+        }
+
+        .crane-counter-weight {
+            position: absolute;
+            left: -30px;
+            top: -10px;
+            width: 30px;
+            height: 25px;
+            background: #444;
+            border-radius: 2px;
+        }
+
+        /* Construction Workers Animation */
+        .workers {
+            position: absolute;
+            bottom: 50px;
+            left: 20%;
+            width: 100px;
+            height: 50px;
+        }
+
+        .worker {
+            position: absolute;
+            width: 8px;
+            height: 20px;
+            background: #ff6b35;
+            border-radius: 50% 50% 0 0;
+            animation: workerMove 6s ease-in-out infinite;
+        }
+
+        .worker:nth-child(1) {
+            left: 0;
+            animation-delay: 0s;
+        }
+
+        .worker:nth-child(2) {
+            left: 20px;
+            animation-delay: 2s;
+        }
+
+        .worker:nth-child(3) {
+            left: 40px;
+            animation-delay: 4s;
+        }
+
+        /* Building Construction Animation */
+        .building-construction {
+            position: absolute;
+            bottom: 0;
+            left: 30%;
+            width: 80px;
+            height: 200px;
+        }
+
+        .building-floor {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 40px;
+            background: linear-gradient(to right, #666, #555);
+            border: 2px solid #444;
+            opacity: 0;
+            animation: buildingGrow 12s ease-in-out infinite;
+        }
+
+        .building-floor:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .building-floor:nth-child(2) {
+            bottom: 40px;
+            animation-delay: 3s;
+        }
+
+        .building-floor:nth-child(3) {
+            bottom: 80px;
+            animation-delay: 6s;
+        }
+
+        .building-floor:nth-child(4) {
+            bottom: 120px;
+            animation-delay: 9s;
+        }
+
+        /* Dust and Particles */
+        .dust-particles {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+        }
+
+        .dust {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: dustFloat 8s ease-in-out infinite;
+        }
+
+        .dust:nth-child(1) {
+            left: 25%;
+            animation-delay: 0s;
+        }
+
+        .dust:nth-child(2) {
+            left: 45%;
+            animation-delay: 2s;
+        }
+
+        .dust:nth-child(3) {
+            left: 65%;
+            animation-delay: 4s;
+        }
+
+        .dust:nth-child(4) {
+            left: 85%;
+            animation-delay: 6s;
+        }
+
+        /* Animation Keyframes */
+        @keyframes craneRotate {
+            0%, 25% { transform: rotate(0deg); }
+            50%, 75% { transform: rotate(45deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+        @keyframes craneHook {
+            0%, 25% { height: 60px; }
+            50% { height: 120px; }
+            75%, 100% { height: 60px; }
+        }
+
+        @keyframes craneLoad {
+            0%, 25% { opacity: 0; transform: translateY(0); }
+            50% { opacity: 1; transform: translateY(60px); }
+            75%, 100% { opacity: 0; transform: translateY(0); }
+        }
+
+        @keyframes workerMove {
+            0%, 100% { transform: translateX(0) scale(1); }
+            25% { transform: translateX(10px) scale(1.1); }
+            50% { transform: translateX(20px) scale(1); }
+            75% { transform: translateX(10px) scale(0.9); }
+        }
+
+        @keyframes buildingGrow {
+            0%, 20% { opacity: 0; transform: scaleY(0); }
+            30%, 90% { opacity: 1; transform: scaleY(1); }
+            100% { opacity: 1; transform: scaleY(1); }
+        }
+
+        @keyframes dustFloat {
+            0% { opacity: 0; transform: translateY(0) translateX(0); }
+            25% { opacity: 1; transform: translateY(-30px) translateX(10px); }
+            50% { opacity: 0.7; transform: translateY(-60px) translateX(-5px); }
+            75% { opacity: 0.3; transform: translateY(-90px) translateX(15px); }
+            100% { opacity: 0; transform: translateY(-120px) translateX(0); }
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 0 2rem;
+            animation: fadeInUp 1s ease-out;
+            position: relative;
+            z-index: 10;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: #ff6b35;
+            color: white;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+        }
+
+        .cta-button:hover {
+            background: #e55a2b;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+        }
+
+        /* About Section - Redesigned */
+        .about {
+            padding: 6rem 0;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="%23e0e0e0" stroke-width="0.5" opacity="0.3"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+            width: 100%;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: #2c5aa0;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, #ff6b35, #ff8c42);
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 4rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .about-intro {
+            text-align: center;
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-intro::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #2c5aa0, #ff6b35);
+        }
+
+        .about-intro h3 {
+            color: #2c5aa0;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .about-intro .company-year {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff6b35, #ff8c42);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .about-details:last-of-type {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .about-text-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border-left: 4px solid #2c5aa0;
+        }
+
+        .about-text-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+        }
+
+        .about-text-card h4 {
+            color: #2c5aa0;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .about-text-card h4 i {
+            color: #ff6b35;
+            font-size: 1.2rem;
+        }
+
+        .about-text-card p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: #555;
+            margin-bottom: 1rem;
+        }
+
+        .vision-card {
+            border-left: 4px solid #ff6b35;
+        }
+
+        .vision-card h4 {
+            color: #ff6b35;
+        }
+
+        .mission-card {
+            border-left: 4px solid #28a745;
+        }
+
+        .mission-card h4 {
+            color: #28a745;
+        }
+
+        .values-card {
+            border-left: 4px solid #6f42c1;
+        }
+
+        .values-card h4 {
+            color: #6f42c1;
+        }
+
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #2c5aa0;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        /* Services Section */
+        .services {
+            padding: 5rem 0;
+            background: white;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .service-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border-top: 4px solid #2c5aa0;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            color: #ff6b35;
+            margin-bottom: 1rem;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            color: #2c5aa0;
+            margin-bottom: 1rem;
+        }
+
+        .service-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Projects Section */
+        .projects {
+            padding: 5rem 0;
+            background: #f8f9fa;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .project-image {
+            height: 250px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .project-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(44, 90, 160, 0.8), rgba(255, 107, 53, 0.8));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .project-card:hover .project-overlay {
+            opacity: 1;
+        }
+
+        .project-overlay i {
+            font-size: 3rem;
+            color: white;
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-content h3 {
+            color: #2c5aa0;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .project-content p {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .project-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+        }
+
+        .project-type {
+            background: #2c5aa0;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .project-status {
+            font-weight: 500;
+            font-size: 0.9rem;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            display: inline-block;
+            color: #28a745;
+            background: rgba(40, 167, 69, 0.1);
+        }
+
+        .project-status.ongoing {
+            color: #ff6b35;
+            background: rgba(255, 107, 53, 0.1);
+            border: 1px solid rgba(255, 107, 53, 0.3);
+        }
+
+        /* Project Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 2% auto;
+            padding: 0;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: modalSlideIn 0.3s ease-out;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            position: relative;
+            height: 300px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 15px 15px 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(44, 90, 160, 0.8), rgba(255, 107, 53, 0.8));
+            border-radius: 15px 15px 0 0;
+        }
+
+        .modal-title {
+            position: relative;
+            z-index: 10;
+            color: white;
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 20;
+            background: rgba(0, 0, 0, 0.3);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .close:hover {
+            background: rgba(0, 0, 0, 0.6);
+            transform: scale(1.1);
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .project-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .detail-item {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 4px solid #2c5aa0;
+        }
+
+        .detail-item h4 {
+            color: #2c5aa0;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .detail-item h4 i {
+            color: #ff6b35;
+        }
+
+        .detail-item p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .project-description {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .project-description h3 {
+            color: #2c5aa0;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .project-description p {
+            color: #555;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 5rem 0;
+            background: #2c5aa0;
+            color: white;
+        }
+
+        .contact .section-title {
+            color: white;
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-top: 3rem;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .contact-item i {
+            font-size: 1.5rem;
+            color: #ff6b35;
+            width: 30px;
+        }
+
+        .contact-form {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            font-family: inherit;
+        }
+
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: #ff6b35;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            background: #e55a2b;
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        .footer {
+            background: #1a1a1a;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .container {
+                padding: 0 1.5rem;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .about-details:last-of-type {
+                grid-template-columns: 1fr 1fr;
+                gap: 2rem;
+            }
+
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+            }
+
+            .project-details {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: white;
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .about-content,
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .about-details {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .about-details:last-of-type {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .about-stats {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .about-intro {
+                padding: 2rem;
+            }
+
+            .about-text-card {
+                padding: 2rem;
+            }
+
+            .services-grid,
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+
+            .modal-content {
+                width: 95%;
+                margin: 5% auto;
+            }
+
+            .modal-title {
+                font-size: 1.8rem;
+            }
+
+            .modal-body {
+                padding: 1.5rem;
+            }
+
+            .project-details {
+                grid-template-columns: 1fr;
+            }
+
+            /* Mobile Animation Adjustments */
+            .crane {
+                right: 5%;
+                width: 120px;
+                height: 250px;
+            }
+
+            .crane-base {
+                width: 12px;
+                height: 180px;
+            }
+
+            .crane-arm {
+                bottom: 170px;
+                width: 90px;
+                height: 5px;
+            }
+
+            .workers {
+                left: 15%;
+                width: 60px;
+            }
+
+            .building-construction {
+                left: 25%;
+                width: 50px;
+                height: 120px;
+            }
+
+            .building-floor {
+                height: 25px;
+            }
+
+            .building-floor:nth-child(2) {
+                bottom: 25px;
+            }
+
+            .building-floor:nth-child(3) {
+                bottom: 50px;
+            }
+
+            .building-floor:nth-child(4) {
+                bottom: 75px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .service-card {
+                padding: 1.5rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-item {
+                padding: 0.8rem;
+            }
+
+            .contact-item h4 {
+                font-size: 1rem;
+            }
+
+            .contact-item p {
+                font-size: 0.9rem;
+            }
+
+            .about-intro {
+                padding: 1.5rem;
+            }
+
+            .about-intro h3 {
+                font-size: 1.6rem;
+            }
+
+            .about-text-card {
+                padding: 1.5rem;
+            }
+
+            .about-text-card h4 {
+                font-size: 1.2rem;
+            }
+
+            .about-stats {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="nav-container">
+            <a class="logo" href="#">Binyapı</a>
+            <nav>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="#home">Ana Sayfa</a></li>
+                    <li><a href="#about">Hakkımızda</a></li>
+                    <li><a href="#services">Hizmetler</a></li>
+                    <li><a href="#projects">Projeler</a></li>
+                    <li><a href="#contact">İletişim</a></li>
+                </ul>
+                <button class="mobile-menu-toggle" id="mobile-menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <!-- Construction Animation -->
+        <div class="construction-animation">
+            <!-- Tower Crane -->
+            <div class="crane">
+                <div class="crane-base"></div>
+                <div class="crane-arm">
+                    <div class="crane-counter-weight"></div>
+                    <div class="crane-hook">
+                        <div class="crane-load"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Construction Workers -->
+            <div class="workers">
+                <div class="worker"></div>
+                <div class="worker"></div>
+                <div class="worker"></div>
+            </div>
+
+            <!-- Building Under Construction -->
+            <div class="building-construction">
+                <div class="building-floor"></div>
+                <div class="building-floor"></div>
+                <div class="building-floor"></div>
+                <div class="building-floor"></div>
+            </div>
+
+            <!-- Dust Particles -->
+            <div class="dust-particles">
+                <div class="dust"></div>
+                <div class="dust"></div>
+                <div class="dust"></div>
+                <div class="dust"></div>
+            </div>
+        </div>
+
+        <div class="hero-content">
+            <h1>Güvenilir İnşaat Çözümleri</h1>
+            <p>Ahşap kalıp ve tünel kalıp sistemleri ile toplu konut projelerinde uzman ekibimizle kaliteli hizmet sunuyoruz</p>
+            <a class="cta-button" href="#contact">Bizimle İletişime Geçin</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <h2 class="section-title fade-in">Hakkımızda</h2>
+            <div class="about-content">
+                <!-- Company Introduction -->
+                <div class="about-intro fade-in">
+                    <div class="company-year">2011'den Beri</div>
+                    <h3>Binyapı Emlak Geliştirme İnşaat</h3>
+                    <p style="font-size: 1.2rem; line-height: 1.8; color: #555; margin-bottom: 0;">
+                        İnşaat Mühendisi Taner DURDU tarafından kurulan firmamız, yenilikçi ve profesyonel 
+                        anlayışı ile nitelikli projelere imza atarak sektörünün önemli firmaları arasında 
+                        yerini almıştır. Ahşap kalıp ve tünel kalıp sistemlerinde uzmanlaşmış kadromuzla, 
+                        özellikle toplu konut projelerinde mükemmellik standardını yakalıyoruz.
+                    </p>
+                </div>
+
+                <!-- Detailed Information Cards -->
+                <div class="about-details">
+                    <div class="about-text-card fade-in">
+                        <h4><i class="fas fa-building"></i> Deneyim ve Uzmanlık</h4>
+                        <p>
+                            Kısa sürede elde edilen başarımızın arkasında, firma kurucusunun inşaat sektörünün 
+                            çeşitli alanlarında ve kademelerinde elde ettiği deneyimin payı büyüktür.
+                        </p>
+                        <p>
+                            Merkezi İstanbul Pendik İlçesinde bulunan firmamız, yetişmiş teknik personeli ve 
+                            güçlü alt yapısı ile önemli ve nitelikli projeleri hayata geçirmeye yetecek 
+                            kapasitededir.
+                        </p>
+                        <p>
+                            Modern teknoloji ve geleneksel ustalığı harmanlayarak, her projede müşteri 
+                            memnuniyetini en üst seviyede tutmayı hedefliyoruz.
+                        </p>
+                    </div>
+
+                    <div class="about-text-card vision-card fade-in">
+                        <h4><i class="fas fa-eye"></i> Vizyonumuz</h4>
+                        <p>
+                            Müşteri ve çalışanları topluma değer katan, mesleki değerlerine sadık, özverili, 
+                            dinamik ve deneyimli bir kurum olmak.
+                        </p>
+                        <p>
+                            Teknolojisi, bilgi gücü ve sağladığı faydayı toplumla paylaşan, ilkeleri ile 
+                            sektörde model olan, büyük projeler imza atan uluslararası bir inşaat şirketi 
+                            olmaktır.
+                        </p>
+                        <p>
+                            Sürdürülebilir kalkınma ilkeleri doğrultusunda, çevre dostu ve yenilikçi 
+                            çözümlerle geleceğin inşaat sektörüne öncülük etmek.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Mission and Vision Cards -->
+                <div class="about-details">
+                    <div class="about-text-card mission-card fade-in">
+                        <h4><i class="fas fa-target"></i> Misyonumuz</h4>
+                        <p>
+                            Ahşap kalıp ve tünel kalıp sistemlerinde edindiğimiz uzmanlık ile toplu konut 
+                            projelerinde sektörün en kaliteli hizmetini sunmak.
+                        </p>
+                        <p>
+                            Müşteri memnuniyetini ön planda tutarak, zamanında teslimat, kaliteli işçilik 
+                            ve güvenilir hizmet anlayışı ile projelerimizi hayata geçirmek.
+                        </p>
+                        <p>
+                            Sürekli gelişim ve yenilik odaklı yaklaşımımızla, inşaat sektörüne değer 
+                            katacak çözümler üretmek ve sektör standartlarını yükseltmek.
+                        </p>
+                    </div>
+
+                    <div class="about-text-card values-card fade-in">
+                        <h4><i class="fas fa-handshake"></i> Değerlerimiz</h4>
+                        <p>
+                            <strong>Kalite:</strong> Her projede mükemmellik standardını yakalamak ve 
+                            sürdürmek için titizlikle çalışıyoruz.
+                        </p>
+                        <p>
+                            <strong>Güvenilirlik:</strong> Sözümüzü tutmak, zamanında teslimat yapmak 
+                            ve müşteri güvenini kazanmak önceliğimizdir.
+                        </p>
+                        <p>
+                            <strong>İnovasyon:</strong> Sektördeki yenilikleri takip ederek, modern 
+                            teknolojiler ile geleneksel ustalığı harmanlıyoruz.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Statistics Section -->
+                <div class="about-stats fade-in">
+                    <div class="stat-item">
+                        <div class="stat-number">13+</div>
+                        <div class="stat-label">Yıllık Deneyim</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">100K+</div>
+                        <div class="stat-label">Konut Kapasitesi</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">22+</div>
+                        <div class="stat-label">Büyük Proje</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="container">
+            <h2 class="section-title fade-in">Hizmetlerimiz</h2>
+            <div class="services-grid">
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-hammer"></i>
+                    </div>
+                    <h3>Ahşap Kalıp Sistemleri</h3>
+                    <p>
+                        Geleneksel ahşap kalıp uygulamaları ile modern teknikler birleştirilerek, 
+                        dayanıklı ve estetik beton yüzeyler elde ediyoruz. Özel tasarım projelerinde 
+                        esnek çözümler sunuyoruz.
+                    </p>
+                </div>
+
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <h3>Tünel Kalıp Sistemleri</h3>
+                    <p>
+                        Hızlı ve ekonomik inşaat çözümleri için tünel kalıp sistemleri uyguluyoruz. 
+                        Toplu konut projelerinde yüksek kalite standartları ile zamanında teslimat 
+                        garantisi veriyoruz.
+                    </p>
+                </div>
+
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <h3>Toplu Konut Projeleri</h3>
+                    <p>
+                        Büyük ölçekli konut projelerinde uzmanlaşmış ekibimizle, planlama aşamasından 
+                        teslim aşamasına kadar tüm süreçleri profesyonelce yönetiyoruz.
+                    </p>
+                </div>
+
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3>Proje Yönetimi</h3>
+                    <p>
+                        Deneyimli proje yönetimi ekibimizle, inşaat süreçlerini optimize ediyor, 
+                        kalite kontrol ve güvenlik standartlarını en üst seviyede tutuyoruz.
+                    </p>
+                </div>
+
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Kalite Güvencesi</h3>
+                    <p>
+                        Tüm projelerimizde uluslararası kalite standartlarını uygulayarak, 
+                        müşteri memnuniyetini en üst düzeyde tutmayı hedefliyoruz.
+                    </p>
+                </div>
+
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3>Sürdürülebilir İnşaat</h3>
+                    <p>
+                        Çevre dostu malzemeler ve enerji verimli çözümlerle, 
+                        sürdürülebilir inşaat projelerine imza atıyoruz.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="projects" id="projects">
+        <div class="container">
+            <h2 class="section-title fade-in">Projelerimiz</h2>
+            <div class="projects-grid">
+                <!-- Vira Istanbul Project -->
+                <div class="project-card fade-in" onclick="openModal('vira-istanbul')">
+                    <div class="project-image" style="background-image: url('https://www.projescope.com/wp-content/uploads/2021/08/Projescope-Vira-Istanbul-Apartments.jpg')">
+                        <div class="project-overlay">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Vira Istanbul - Gül İnşaat</h3>
+                        <p>Beylikdüzü'nde 1.189 konutlu modern yaşam kompleksi. 92.000 m² alan üzerinde 17 bloktan oluşan proje.</p>
+                        <div class="project-meta">
+                            <span class="project-type">Toplu Konut</span>
+                            <span class="project-status">Tamamlandı</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Torkam Kiptaş Fikirtepe -->
+                <div class="project-card fade-in" onclick="openModal('torkam-fikirtepe')">
+                    <div class="project-image" style="background-image: url('https://www.konutprojeleri.com/images/proje/torkam-fikirtepe_63.jpg')">
+                        <div class="project-overlay">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Torkam Kiptaş Fikirtepe Konutları</h3>
+                        <p>Kadıköy Fikirtepe'de kentsel dönüşüm projesi kapsamında 760 konut ve 12 ticari ünite.</p>
+                        <div class="project-meta">
+                            <span class="project-type">Kentsel Dönüşüm</span>
+                            <span class="project-status">Tamamlandı</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- İhlas Marmara 4 -->
+                <div class="project-card fade-in" onclick="openModal('ihlas-marmara-4')">
+                    <div class="project-image" style="background-image: url('https://apxconstructiongroup.com/wp-content/uploads/2022/11/modern-apartment-building-designs-dusk.jpeg')">
+                        <div class="project-overlay">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>İhlas Marmara 4 Konutları</h3>
+                        <p>Beylikdüzü'nde 1.249 konut ve 52 ticari üniteden oluşan modern yaşam kompleksi.</p>
+                        <div class="project-meta">
+                            <span class="project-type">Konut + Ticari</span>
+                            <span class="project-status">Tamamlandı</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- İhlas Yapı Bizim Evler Güzelce -->
+                <div class="project-card fade-in" onclick="openModal('bizim-evler-guzelce')">
+                    <div class="project-image" style="background-image: url('https://imaj.emlakjet.com/cms/projects/1288/as7l5tqrp8ef5ypbk8qo.jpg')">
+                        <div class="project-overlay">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>İhlas Yapı Bizim Evler Güzelce</h3>
+                        <p>Büyükçekmece'de 92.293 m² arsa üzerinde 709 konut ve 111 ticari ünite.</p>
+                        <div class="project-meta">
+                            <span class="project-type">Karma Proje</span>
+                            <span class="project-status">Tamamlandı</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Siyahkalem Gebze Emlak Konutları -->
+                <div class="project-card fade-in" onclick="openModal('gebze-emlak-konutlari')">
+                    <div class="project-image" style="background-image: url('https://imaj.emlakjet.com/cms/projects/1375/x6yhsgmuoeugmymtxkgm.jpg')">
+                        <div class="project-overlay">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Siyahkalem Gebze Emlak Konutları 3. Etap</h3>
+                        <p>Kocaeli Gebze'de 93.181 m² arsa üzerinde 1.955 konut. Modern sosyal konut projesi.</p>
+                        <div class="project-meta">
+                            <span class="project-type">Sosyal Konut</span>
+                            <span class="project-status">Tamamlandı</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Akyapı Park Mavera -->
+                <div class="project-card fade-in" onclick="openModal('park-mavera')">
+                    <div class="project-image" style="background-image: url('https://www.yeniemlak.com/resize/568x319/1/1/2/park-mavera-projesi-istanbul-basaksehir-451-112078.png')">
+                        <div class="project-overlay">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Akyapı Park Mavera Evleri</h3>
+                        <p>Başakşehir'de 53.000 m² alanda 7 blokta 556 daire. 3. Köprü bağlantı yolu üzerinde.</p>
+                        <div class="project-meta">
+                            <span class="project-type">Konut Kompleksi</span>
+                            <span class="project-status">Tamamlandı</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tahincioğlu Nidapark Kayaşehir -->
+                <div class="project-card fade-in" onclick="openModal('nidapark-kayasehir')">
+                    <div class="project-image" style="background-image: url('https://images.squarespace-cdn.com/content/v1/601c42f67c056720ada8f332/dc4e4b4c-6345-4913-9b14-8dbc3f8a2057/modern+residential+tower+design.jpg')">
+                        <div class="project-overlay">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Tahincioğlu Nida İnşaat Nidapark Kayaşehir</h3>
+                        <p>Başakşehir'de 3 etaptan oluşan 843 daireli proje. LEED Sertifikası'na aday.</p>
+                        <div class="project-meta">
+                            <span class="project-type">Lüks Konut</span>
+                            <span class="project-status">Tamamlandı</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kiptaş Metrokent -->
+                <div class="project-card fade-in" onclick="openModal('kiptas-metrokent')">
+                    <div class="project-image" style="background-image: url('https://www.metartinsaat.com.tr/wp-content/uploads/2017/03/mass-housing-project-contractor-turkey-4.jpg')">
+                        <div class="project-overlay">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Kiptaş Metrokent Konutları</h3>
+                        <p>Başakşehir'de 85.000 m² alan üzerinde 1.492 konut. 24 katlı 3 bloktan oluşan kompleks.</p>
+                        <div class="project-meta">
+                            <span class="project-type">Belediye Projesi</span>
+                            <span class="project-status">Tamamlandı</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kiptaş Masko Evleri -->
+                <div class="project-card fade-in" onclick="openModal('kiptas-masko')">
+                    <div class="project-image" style="background-image: url('https://www.gayrimenkulhaber.com/wp-content/uploads/2017/11/ikitelli-masko-evleri-770x470.jpg')">
+                        <div class="project-overlay">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Kiptaş Masko Konutları</h3>
+                        <p>İkitelli'de 49.500 m² arsa üzerinde 420 konut. 24 saat güvenlik ve sosyal tesisler.</p>
+                        <div class="project-meta">
+                            <span class="project-type">Belediye Projesi</span>
+                            <span class="project-status">Tamamlandı</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vakıflar Genel Müdürlüğü -->
+                <div class="project-card fade-in" onclick="openModal('vakiflar-176-konut')">
+                    <div class="project-image" style="background-image: url('https://www.hekimyapi.com/img/2014/09/vakiflar-01.jpg')">
+                        <div class="project-overlay">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Vakıflar Genel Müdürlüğü 176 Konut Yapımı</h3>
+                        <p>Sarıyer Maden Mahallesi'nde kat karşılığı konut inşaat projesi.</p>
+                        <div class="project-meta">
+                            <span class="project-type">Kamu Projesi</span>
+                            <span class="project-status">Tamamlandı</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ankarama Konutları -->
+                <div class="project-card fade-in" onclick="openModal('ankarama-konutlari')">
+                    <div class="project-image" style="background-image: url('https://ankara.bel.tr/files/1115/1115/1115/ankara-konut-projesi.jpg')">
+                        <div class="project-overlay">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Ankarama Konutları</h3>
+                        <p>500 bin sosyal konut projesi kapsamında Ankara'da 31.073 konut.</p>
+                        <div class="project-meta">
+                            <span class="project-type">Sosyal Konut</span>
+                            <span class="project-status">Tamamlandı</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TOKİ Isparta -->
+                <div class="project-card fade-in" onclick="openModal('toki-isparta')">
+                    <div class="project-image" style="background-image: url('https://as2.ftcdn.net/jpg/11/13/55/41/1000_F_1113554177_wFR09bxXuZs0ZbgoBAyK7owBrODWDRJV.jpg')">
+                        <div class="project-overlay">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>TOKİ Emlak Pazarlama Isparta Kule Konutları</h3>
+                        <p>Isparta Kuleönü Beldesi'nde 200 konutluk sosyal konut projesi.</p>
+                        <div class="project-meta">
+                            <span class="project-type">TOKİ Projesi</span>
+                            <span class="project-status">Tamamlandı</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kiptaş Sefaköy -->
+                <div class="project-card fade-in" onclick="openModal('kiptas-sefakoy')">
+                    <div class="project-image" style="background-image: url('https://www.turkiye.mimary.com/uploads/files/projects/MIMARY286/exterior/mim2863.jpg')">
+                        <div class="project-overlay">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Kiptaş İstanbul Sefaköy Konutları</h3>
+                        <p>Küçükçekmece Sefaköy'de modern konut projesi. Fevzi Çakmak Caddesi üzerinde.</p>
+                        <div class="project-meta">
+                            <span class="project-type">Belediye Projesi</span>
+                            <span class="project-status">Tamamlandı</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TOKİ Karabük -->
+                <div class="project-card fade-in" onclick="openModal('toki-karabuk')">
+                    <div class="project-image" style="background-image: url('https://www.ahesinsaat.com/uploads/images/toki-malatya-130-konut-yapim-isi-65720.jpg')">
+                        <div class="project-overlay">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>TOKİ Karabük Merkez Konutları</h3>
+                        <p>Karabük Merkez Bayır Mahallesi'nde 280 sosyal konut. Depreme dayanıklı inşaat.</p>
+                        <div class="project-meta">
+                            <span class="project-type">TOKİ Projesi</span>
+                            <span class="project-status">Tamamlandı</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TOKİ Erzincan -->
+                <div class="project-card fade-in" onclick="openModal('toki-erzincan')">
+                    <div class="project-image" style="background-image: url('https://mecyapi.net/resimler/tamamlanan-projeler/erzincan-toki-814konut.webp')">
+                        <div class="project-overlay">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>TOKİ Erzincan Konutları</h3>
+                        <p>500 bin sosyal konut projesi kapsamında Erzincan genelinde 1.760 konut.</p>
+                        <div class="project-meta">
+                            <span class="project-type">TOKİ Projesi</span>
+                            <span class="project-status">Tamamlandı</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kiptaş Esenyurt -->
+                <div class="project-card fade-in" onclick="openModal('kiptas-esenyurt')">
+                    <div class="project-image" style="background-image: url('https://www.realestateallturkey.com/wp-content/uploads/2012/02/istanbul-apartments-esenyurt-project.jpg')">
+                        <div class="project-overlay">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Kiptaş Esenyurt Konutları</h3>
+                        <p>Esenyurt'ta çeşitli etaplarda gerçekleştirilen belediye konut projeleri.</p>
+                        <div class="project-meta">
+                            <span class="project-type">Belediye Projesi</span>
+                            <span class="project-status">Tamamlandı</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Başakşehir Kültür Merkezi -->
+                <div class="project-card fade-in" onclick="openModal('basaksehir-kultur-merkezi')">
+                    <div class="project-image" style="background-image: url('https://b6s54eznn8xq.merlincdn.net/Uploads/BranchImage/1184e3908c194c1aab3a9d8579cab2ae.jpg')">
+                        <div class="project-overlay">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Başakşehir Kültür Merkezi</h3>
+                        <p>İstanbul Başakşehir'de 2.800 m² alana sahip 4 katlı kültür merkezi.</p>
+                        <div class="project-meta">
+                            <span class="project-type">Kültür Tesisi</span>
+                            <span class="project-status">Tamamlandı</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kandıra Devlet Hastanesi -->
+                <div class="project-card fade-in" onclick="openModal('kandira-hastanesi')">
+                    <div class="project-image" style="background-image: url('https://static.wixstatic.com/media/29e5f6_6f29ada97c5f4cbeb50fb7f31dfa7439~mv2.jpg/v1/fill/w_877,h_473,al_c,lg_1,q_85/29e5f6_6f29ada97c5f4cbeb50fb7f31dfa7439~mv2.jpg')">
+                        <div class="project-overlay">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Kandıra Devlet Hastanesi</h3>
+                        <p>Kocaeli Kandıra'da 10.000 m² inşaat alanında 50 yataklı devlet hastanesi.</p>
+                        <div class="project-meta">
+                            <span class="project-type">Sağlık Tesisi</span>
+                            <span class="project-status">Tamamlandı</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kahramanmaraş Deprem Konutları -->
+                <div class="project-card fade-in" onclick="openModal('kahramanmaras-deprem')">
+                    <div class="project-image" style="background-image: url('https://trthaberstatic.cdn.wp.trt.com.tr/resimler/2020000/deprem-konutlari-iha-2021453.jpg')">
+                        <div class="project-overlay">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Kahramanmaraş Emlak Konut Deprem Konutları</h3>
+                        <p>6 Şubat depremi sonrası Kahramanmaraş'ta 49.649 konut ve 790 iş yeri.</p>
+                        <div class="project-meta">
+                            <span class="project-type">Afet Konutu</span>
+                            <span class="project-status ongoing">Devam Ediyor</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Adıyaman Deprem Konutları -->
+                <div class="project-card fade-in" onclick="openModal('adiyaman-deprem')">
+                    <div class="project-image" style="background-image: url('https://fotogaleri.star.com.tr/fotogaleri/maintmps/2024/07/10/100720244738-41.jpg')">
+                        <div class="project-overlay">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Adıyaman Emlak Konut Deprem Konutları</h3>
+                        <p>6 Şubat depremi sonrası Adıyaman İndere'de büyük ölçekli deprem konutları projesi.</p>
+                        <div class="project-meta">
+                            <span class="project-type">Afet Konutu</span>
+                            <span class="project-status">Tamamlandı</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Torkam Malatya -->
+                <div class="project-card fade-in" onclick="openModal('torkam-malatya')">
+                    <div class="project-image" style="background-image: url('https://www.ahesinsaat.com/uploads/images/toki-malatya-130-konut-yapim-isi-49363.jpg')">
+                        <div class="project-overlay">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Torkam Malatya Projesi Toplu Konutları</h3>
+                        <p>Malatya genelinde 8.065 konut ve 301 ticari birim. Deprem sonrası yeniden yapılanma.</p>
+                        <div class="project-meta">
+                            <span class="project-type">TOKİ Projesi</span>
+                            <span class="project-status ongoing">Devam Ediyor</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<!-- Project Modals -->
+    <!-- Vira Istanbul Modal -->
+    <div id="vira-istanbul" class="modal">
+        <div class="modal-content">
+            <div class="modal-header" style="background-image: url('https://www.projescope.com/wp-content/uploads/2021/08/Projescope-Vira-Istanbul-Apartments.jpg')">
+                <span class="close" onclick="closeModal('vira-istanbul')">&times;</span>
+                <h2 class="modal-title">Vira Istanbul - Gül İnşaat</h2>
+            </div>
+            <div class="modal-body">
+                <div class="project-details">
+                    <div class="detail-item">
+                        <h4><i class="fas fa-map-marker-alt"></i> Konum</h4>
+                        <p>Beylikdüzü, İstanbul</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-home"></i> Konut Sayısı</h4>
+                        <p>1.189 konut</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-ruler-combined"></i> Proje Alanı</h4>
+                        <p>92.000 m²</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-building"></i> Blok Sayısı</h4>
+                        <p>17 blok</p>
+                    </div>
+                </div>
+                <div class="project-description">
+                    <h3>Proje Hakkında</h3>
+                    <p>Vira Istanbul, Beylikdüzü'nde 92.000 m² alan üzerinde inşa edilen modern yaşam kompleksidir. 17 bloktan oluşan projede toplam 1.189 konut bulunmaktadır.</p>
+                    <p>Proje, modern mimari anlayışı ile tasarlanmış olup, sakinlerine konforlu ve güvenli bir yaşam alanı sunmaktadır. Sosyal tesisleri ve yeşil alanları ile dikkat çeken kompleks, İstanbul'un en prestijli bölgelerinden birinde yer almaktadır.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Torkam Fikirtepe Modal -->
+    <div id="torkam-fikirtepe" class="modal">
+        <div class="modal-content">
+            <div class="modal-header" style="background-image: url('https://www.konutprojeleri.com/images/proje/torkam-fikirtepe_63.jpg')">
+                <span class="close" onclick="closeModal('torkam-fikirtepe')">&times;</span>
+                <h2 class="modal-title">Torkam Kiptaş Fikirtepe Konutları</h2>
+            </div>
+            <div class="modal-body">
+                <div class="project-details">
+                    <div class="detail-item">
+                        <h4><i class="fas fa-map-marker-alt"></i> Konum</h4>
+                        <p>Kadıköy Fikirtepe, İstanbul</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-home"></i> Konut Sayısı</h4>
+                        <p>760 konut</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-store"></i> Ticari Ünite</h4>
+                        <p>12 ticari ünite</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-tools"></i> Proje Türü</h4>
+                        <p>Kentsel Dönüşüm</p>
+                    </div>
+                </div>
+                <div class="project-description">
+                    <h3>Proje Hakkında</h3>
+                    <p>Torkam Kiptaş Fikirtepe Konutları, Kadıköy Fikirtepe bölgesinde gerçekleştirilen kentsel dönüşüm projesi kapsamında inşa edilmiştir.</p>
+                    <p>Toplam 760 konut ve 12 ticari üniteden oluşan proje, modern yaşam standartlarını bölgeye taşımaktadır. Depreme dayanıklı yapısı ve çağdaş mimarisi ile dikkat çeken kompleks, bölgenin çehresini değiştiren önemli projelerden biridir.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- İhlas Marmara 4 Modal -->
+    <div id="ihlas-marmara-4" class="modal">
+        <div class="modal-content">
+            <div class="modal-header" style="background-image: url('https://apxconstructiongroup.com/wp-content/uploads/2022/11/modern-apartment-building-designs-dusk.jpeg')">
+                <span class="close" onclick="closeModal('ihlas-marmara-4')">&times;</span>
+                <h2 class="modal-title">İhlas Marmara 4 Konutları</h2>
+            </div>
+            <div class="modal-body">
+                <div class="project-details">
+                    <div class="detail-item">
+                        <h4><i class="fas fa-map-marker-alt"></i> Konum</h4>
+                        <p>Beylikdüzü, İstanbul</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-home"></i> Konut Sayısı</h4>
+                        <p>1.249 konut</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-store"></i> Ticari Ünite</h4>
+                        <p>52 ticari ünite</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-building"></i> Proje Türü</h4>
+                        <p>Karma Proje</p>
+                    </div>
+                </div>
+                <div class="project-description">
+                    <h3>Proje Hakkında</h3>
+                    <p>İhlas Marmara 4 Konutları, Beylikdüzü'nde modern yaşam kompleksi olarak tasarlanmıştır. 1.249 konut ve 52 ticari üniteden oluşan proje, geniş sosyal tesisleri ile dikkat çekmektedir.</p>
+                    <p>Proje, İstanbul'un en gelişen bölgelerinden birinde konumlanmış olup, sakinlerine hem konut hem de ticari imkanlar sunmaktadır.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bizim Evler Güzelce Modal -->
+    <div id="bizim-evler-guzelce" class="modal">
+        <div class="modal-content">
+            <div class="modal-header" style="background-image: url('https://imaj.emlakjet.com/cms/projects/1288/as7l5tqrp8ef5ypbk8qo.jpg')">
+                <span class="close" onclick="closeModal('bizim-evler-guzelce')">&times;</span>
+                <h2 class="modal-title">İhlas Yapı Bizim Evler Güzelce</h2>
+            </div>
+            <div class="modal-body">
+                <div class="project-details">
+                    <div class="detail-item">
+                        <h4><i class="fas fa-map-marker-alt"></i> Konum</h4>
+                        <p>Büyükçekmece, İstanbul</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-home"></i> Konut Sayısı</h4>
+                        <p>709 konut</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-store"></i> Ticari Ünite</h4>
+                        <p>111 ticari ünite</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-ruler-combined"></i> Arsa Alanı</h4>
+                        <p>92.293 m²</p>
+                    </div>
+                </div>
+                <div class="project-description">
+                    <h3>Proje Hakkında</h3>
+                    <p>İhlas Yapı Bizim Evler Güzelce, Büyükçekmece'de 92.293 m² arsa üzerinde inşa edilen kapsamlı bir karma projedir.</p>
+                    <p>709 konut ve 111 ticari üniteden oluşan proje, modern yaşam standartlarını karşılayan sosyal tesisleri ve yeşil alanları ile dikkat çekmektedir.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gebze Emlak Konutları Modal -->
+    <div id="gebze-emlak-konutlari" class="modal">
+        <div class="modal-content">
+            <div class="modal-header" style="background-image: url('https://imaj.emlakjet.com/cms/projects/1375/x6yhsgmuoeugmymtxkgm.jpg')">
+                <span class="close" onclick="closeModal('gebze-emlak-konutlari')">&times;</span>
+                <h2 class="modal-title">Siyahkalem Gebze Emlak Konutları 3. Etap</h2>
+            </div>
+            <div class="modal-body">
+                <div class="project-details">
+                    <div class="detail-item">
+                        <h4><i class="fas fa-map-marker-alt"></i> Konum</h4>
+                        <p>Gebze, Kocaeli</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-home"></i> Konut Sayısı</h4>
+                        <p>1.955 konut</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-ruler-combined"></i> Arsa Alanı</h4>
+                        <p>93.181 m²</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-tools"></i> Proje Türü</h4>
+                        <p>Sosyal Konut</p>
+                    </div>
+                </div>
+                <div class="project-description">
+                    <h3>Proje Hakkında</h3>
+                    <p>Siyahkalem Gebze Emlak Konutları 3. Etap, Kocaeli Gebze'de 93.181 m² arsa üzerinde gerçekleştirilen büyük ölçekli sosyal konut projesidir.</p>
+                    <p>1.955 konuttan oluşan proje, modern sosyal konut anlayışını yansıtan tasarımı ve uygun fiyat politikası ile geniş kitlelere hitap etmektedir.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Park Mavera Modal -->
+    <div id="park-mavera" class="modal">
+        <div class="modal-content">
+            <div class="modal-header" style="background-image: url('https://www.yeniemlak.com/resize/568x319/1/1/2/park-mavera-projesi-istanbul-basaksehir-451-112078.png')">
+                <span class="close" onclick="closeModal('park-mavera')">&times;</span>
+                <h2 class="modal-title">Akyapı Park Mavera Evleri</h2>
+            </div>
+            <div class="modal-body">
+                <div class="project-details">
+                    <div class="detail-item">
+                        <h4><i class="fas fa-map-marker-alt"></i> Konum</h4>
+                        <p>Başakşehir, İstanbul</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-home"></i> Daire Sayısı</h4>
+                        <p>556 daire</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-building"></i> Blok Sayısı</h4>
+                        <p>7 blok</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-ruler-combined"></i> Proje Alanı</h4>
+                        <p>53.000 m²</p>
+                    </div>
+                </div>
+                <div class="project-description">
+                    <h3>Proje Hakkında</h3>
+                    <p>Akyapı Park Mavera Evleri, Başakşehir'de 53.000 m² alanda 7 blokta 556 daireden oluşan modern konut kompleksidir.</p>
+                    <p>3. Köprü bağlantı yolu üzerinde stratejik konumu ile dikkat çeken proje, sakinlerine hem şehir merkezine hem de havalimanına kolay ulaşım imkanı sunmaktadır.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Nidapark Kayaşehir Modal -->
+    <div id="nidapark-kayasehir" class="modal">
+        <div class="modal-content">
+            <div class="modal-header" style="background-image: url('https://images.squarespace-cdn.com/content/v1/601c42f67c056720ada8f332/dc4e4b4c-6345-4913-9b14-8dbc3f8a2057/modern+residential+tower+design.jpg')">
+                <span class="close" onclick="closeModal('nidapark-kayasehir')">&times;</span>
+                <h2 class="modal-title">Tahincioğlu Nida İnşaat Nidapark Kayaşehir</h2>
+            </div>
+            <div class="modal-body">
+                <div class="project-details">
+                    <div class="detail-item">
+                        <h4><i class="fas fa-map-marker-alt"></i> Konum</h4>
+                        <p>Başakşehir, İstanbul</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-home"></i> Daire Sayısı</h4>
+                        <p>843 daire</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-layer-group"></i> Etap Sayısı</h4>
+                        <p>3 etap</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-award"></i> Sertifika</h4>
+                        <p>LEED Sertifikası Adayı</p>
+                    </div>
+                </div>
+                <div class="project-description">
+                    <h3>Proje Hakkında</h3>
+                    <p>Tahincioğlu Nida İnşaat Nidapark Kayaşehir, Başakşehir'de 3 etaptan oluşan 843 daireli lüks konut projesidir.</p>
+                    <p>LEED Sertifikası'na aday olan proje, çevre dostu tasarımı ve sürdürülebilir yaşam anlayışı ile dikkat çekmektedir. Modern mimarisi ve kaliteli yaşam alanları ile prestijli bir yaşam sunmaktadır.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Kiptaş Metrokent Modal -->
+    <div id="kiptas-metrokent" class="modal">
+        <div class="modal-content">
+            <div class="modal-header" style="background-image: url('https://www.metartinsaat.com.tr/wp-content/uploads/2017/03/mass-housing-project-contractor-turkey-4.jpg')">
+                <span class="close" onclick="closeModal('kiptas-metrokent')">&times;</span>
+                <h2 class="modal-title">Kiptaş Metrokent Konutları</h2>
+            </div>
+            <div class="modal-body">
+                <div class="project-details">
+                    <div class="detail-item">
+                        <h4><i class="fas fa-map-marker-alt"></i> Konum</h4>
+                        <p>Başakşehir, İstanbul</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-home"></i> Konut Sayısı</h4>
+                        <p>1.492 konut</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-building"></i> Blok Sayısı</h4>
+                        <p>3 blok (24 katlı)</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-ruler-combined"></i> Proje Alanı</h4>
+                        <p>85.000 m²</p>
+                    </div>
+                </div>
+                <div class="project-description">
+                    <h3>Proje Hakkında</h3>
+                    <p>Kiptaş Metrokent Konutları, Başakşehir'de 85.000 m² alan üzerinde 24 katlı 3 bloktan oluşan büyük ölçekli belediye projesidir.</p>
+                    <p>1.492 konuttan oluşan kompleks, modern yaşam standartlarını karşılayan sosyal tesisleri ve ulaşım kolaylığı ile dikkat çekmektedir.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Kiptaş Masko Modal -->
+    <div id="kiptas-masko" class="modal">
+        <div class="modal-content">
+            <div class="modal-header" style="background-image: url('https://www.gayrimenkulhaber.com/wp-content/uploads/2017/11/ikitelli-masko-evleri-770x470.jpg')">
+                <span class="close" onclick="closeModal('kiptas-masko')">&times;</span>
+                <h2 class="modal-title">Kiptaş Masko Konutları</h2>
+            </div>
+            <div class="modal-body">
+                <div class="project-details">
+                    <div class="detail-item">
+                        <h4><i class="fas fa-map-marker-alt"></i> Konum</h4>
+                        <p>İkitelli, İstanbul</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-home"></i> Konut Sayısı</h4>
+                        <p>420 konut</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-ruler-combined"></i> Arsa Alanı</h4>
+                        <p>49.500 m²</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-shield-alt"></i> Güvenlik</h4>
+                        <p>24 saat güvenlik</p>
+                    </div>
+                </div>
+                <div class="project-description">
+                    <h3>Proje Hakkında</h3>
+                    <p>Kiptaş Masko Konutları, İkitelli'de 49.500 m² arsa üzerinde 420 konuttan oluşan belediye projesidir.</p>
+                    <p>24 saat güvenlik hizmeti ve zengin sosyal tesisleri ile sakinlerine güvenli ve konforlu bir yaşam alanı sunmaktadır.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Vakıflar 176 Konut Modal -->
+    <div id="vakiflar-176-konut" class="modal">
+        <div class="modal-content">
+            <div class="modal-header" style="background-image: url('https://www.hekimyapi.com/img/2014/09/vakiflar-01.jpg')">
+                <span class="close" onclick="closeModal('vakiflar-176-konut')">&times;</span>
+                <h2 class="modal-title">Vakıflar Genel Müdürlüğü 176 Konut Yapımı</h2>
+            </div>
+            <div class="modal-body">
+                <div class="project-details">
+                    <div class="detail-item">
+                        <h4><i class="fas fa-map-marker-alt"></i> Konum</h4>
+                        <p>Sarıyer Maden Mahallesi, İstanbul</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-home"></i> Konut Sayısı</h4>
+                        <p>176 konut</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-handshake"></i> Sözleşme Türü</h4>
+                        <p>Kat Karşılığı</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-building"></i> Proje Türü</h4>
+                        <p>Kamu Projesi</p>
+                    </div>
+                </div>
+                <div class="project-description">
+                    <h3>Proje Hakkında</h3>
+                    <p>Vakıflar Genel Müdürlüğü 176 Konut Yapımı, Sarıyer Maden Mahallesi'nde kat karşılığı inşaat sistemi ile gerçekleştirilen kamu projesidir.</p>
+                    <p>176 konuttan oluşan proje, kamu kurumu güvencesi altında kaliteli konut üretimi örneği teşkil etmektedir.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ankarama Konutları Modal -->
+    <div id="ankarama-konutlari" class="modal">
+        <div class="modal-content">
+            <div class="modal-header" style="background-image: url('https://ankara.bel.tr/files/1115/1115/1115/ankara-konut-projesi.jpg')">
+                <span class="close" onclick="closeModal('ankarama-konutlari')">&times;</span>
+                <h2 class="modal-title">Ankarama Konutları</h2>
+            </div>
+            <div class="modal-body">
+                <div class="project-details">
+                    <div class="detail-item">
+                        <h4><i class="fas fa-map-marker-alt"></i> Konum</h4>
+                        <p>Ankara</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-home"></i> Konut Sayısı</h4>
+                        <p>31.073 konut</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-users"></i> Proje Kapsamı</h4>
+                        <p>500 bin sosyal konut</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-tools"></i> Proje Türü</h4>
+                        <p>Sosyal Konut</p>
+                    </div>
+                </div>
+                <div class="project-description">
+                    <h3>Proje Hakkında</h3>
+                    <p>Ankarama Konutları, 500 bin sosyal konut projesi kapsamında Ankara'da gerçekleştirilen büyük ölçekli sosyal konut projesidir.</p>
+                    <p>31.073 konuttan oluşan proje, sosyal konut politikalarının hayata geçirilmesinde önemli bir rol oynamaktadır.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOKİ Isparta Modal -->
+    <div id="toki-isparta" class="modal">
+        <div class="modal-content">
+            <div class="modal-header" style="background-image: url('https://as2.ftcdn.net/jpg/11/13/55/41/1000_F_1113554177_wFR09bxXuZs0ZbgoBAyK7owBrODWDRJV.jpg')">
+                <span class="close" onclick="closeModal('toki-isparta')">&times;</span>
+                <h2 class="modal-title">TOKİ Emlak Pazarlama Isparta Kule Konutları</h2>
+            </div>
+            <div class="modal-body">
+                <div class="project-details">
+                    <div class="detail-item">
+                        <h4><i class="fas fa-map-marker-alt"></i> Konum</h4>
+                        <p>Isparta Kuleönü Beldesi</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-home"></i> Konut Sayısı</h4>
+                        <p>200 konut</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-building"></i> Kurum</h4>
+                        <p>TOKİ</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-tools"></i> Proje Türü</h4>
+                        <p>Sosyal Konut</p>
+                    </div>
+                </div>
+                <div class="project-description">
+                    <h3>Proje Hakkında</h3>
+                    <p>TOKİ Emlak Pazarlama Isparta Kule Konutları, Isparta Kuleönü Beldesi'nde 200 konutluk sosyal konut projesidir.</p>
+                    <p>TOKİ'nin sosyal konut politikaları çerçevesinde gerçekleştirilen proje, bölge halkına uygun fiyatlı konut imkanı sunmaktadır.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Kiptaş Sefaköy Modal -->
+    <div id="kiptas-sefakoy" class="modal">
+        <div class="modal-content">
+            <div class="modal-header" style="background-image: url('https://www.turkiye.mimary.com/uploads/files/projects/MIMARY286/exterior/mim2863.jpg')">
+                <span class="close" onclick="closeModal('kiptas-sefakoy')">&times;</span>
+                <h2 class="modal-title">Kiptaş İstanbul Sefaköy Konutları</h2>
+            </div>
+            <div class="modal-body">
+                <div class="project-details">
+                    <div class="detail-item">
+                        <h4><i class="fas fa-map-marker-alt"></i> Konum</h4>
+                        <p>Küçükçekmece Sefaköy, İstanbul</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-road"></i> Cadde</h4>
+                        <p>Fevzi Çakmak Caddesi</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-building"></i> Kurum</h4>
+                        <p>Kiptaş</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-tools"></i> Proje Türü</h4>
+                        <p>Belediye Projesi</p>
+                    </div>
+                </div>
+                <div class="project-description">
+                    <h3>Proje Hakkında</h3>
+                    <p>Kiptaş İstanbul Sefaköy Konutları, Küçükçekmece Sefaköy'de Fevzi Çakmak Caddesi üzerinde gerçekleştirilen modern konut projesidir.</p>
+                    <p>Belediye güvencesi altında inşa edilen proje, bölgenin gelişimine katkı sağlayan önemli projelerden biridir.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOKİ Karabük Modal -->
+    <div id="toki-karabuk" class="modal">
+        <div class="modal-content">
+            <div class="modal-header" style="background-image: url('https://www.ahesinsaat.com/uploads/images/toki-malatya-130-konut-yapim-isi-65720.jpg')">
+                <span class="close" onclick="closeModal('toki-karabuk')">&times;</span>
+                <h2 class="modal-title">TOKİ Karabük Merkez Konutları</h2>
+            </div>
+            <div class="modal-body">
+                <div class="project-details">
+                    <div class="detail-item">
+                        <h4><i class="fas fa-map-marker-alt"></i> Konum</h4>
+                        <p>Karabük Merkez Bayır Mahallesi</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-home"></i> Konut Sayısı</h4>
+                        <p>280 konut</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-shield-alt"></i> Özellik</h4>
+                        <p>Depreme dayanıklı</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-building"></i> Kurum</h4>
+                        <p>TOKİ</p>
+                    </div>
+                </div>
+                <div class="project-description">
+                    <h3>Proje Hakkında</h3>
+                    <p>TOKİ Karabük Merkez Konutları, Karabük Merkez Bayır Mahallesi'nde 280 sosyal konuttan oluşan projedir.</p>
+                    <p>Depreme dayanıklı inşaat teknikleri kullanılarak gerçekleştirilen proje, bölge halkına güvenli ve uygun fiyatlı konut imkanı sunmaktadır.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOKİ Erzincan Modal -->
+    <div id="toki-erzincan" class="modal">
+        <div class="modal-content">
+            <div class="modal-header" style="background-image: url('https://mecyapi.net/resimler/tamamlanan-projeler/erzincan-toki-814konut.webp')">
+                <span class="close" onclick="closeModal('toki-erzincan')">&times;</span>
+                <h2 class="modal-title">TOKİ Erzincan Konutları</h2>
+            </div>
+            <div class="modal-body">
+                <div class="project-details">
+                    <div class="detail-item">
+                        <h4><i class="fas fa-map-marker-alt"></i> Konum</h4>
+                        <p>Erzincan</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-home"></i> Konut Sayısı</h4>
+                        <p>1.760 konut</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-users"></i> Proje Kapsamı</h4>
+                        <p>500 bin sosyal konut</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-building"></i> Kurum</h4>
+                        <p>TOKİ</p>
+                    </div>
+                </div>
+                <div class="project-description">
+                    <h3>Proje Hakkında</h3>
+                    <p>TOKİ Erzincan Konutları, 500 bin sosyal konut projesi kapsamında Erzincan genelinde gerçekleştirilen 1.760 konutluk büyük ölçekli projedir.</p>
+                    <p>Sosyal konut politikalarının hayata geçirilmesinde önemli rol oynayan proje, bölge halkına modern yaşam standartları sunmaktadır.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Kiptaş Esenyurt Modal -->
+    <div id="kiptas-esenyurt" class="modal">
+        <div class="modal-content">
+            <div class="modal-header" style="background-image: url('https://www.realestateallturkey.com/wp-content/uploads/2012/02/istanbul-apartments-esenyurt-project.jpg')">
+                <span class="close" onclick="closeModal('kiptas-esenyurt')">&times;</span>
+                <h2 class="modal-title">Kiptaş Esenyurt Konutları</h2>
+            </div>
+            <div class="modal-body">
+                <div class="project-details">
+                    <div class="detail-item">
+                        <h4><i class="fas fa-map-marker-alt"></i> Konum</h4>
+                        <p>Esenyurt, İstanbul</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-layer-group"></i> Etaplar</h4>
+                        <p>Çeşitli etaplar</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-building"></i> Kurum</h4>
+                        <p>Kiptaş</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-tools"></i> Proje Türü</h4>
+                        <p>Belediye Projesi</p>
+                    </div>
+                </div>
+                <div class="project-description">
+                    <h3>Proje Hakkında</h3>
+                    <p>Kiptaş Esenyurt Konutları, Esenyurt'ta çeşitli etaplarda gerçekleştirilen belediye konut projeleridir.</p>
+                    <p>İstanbul Büyükşehir Belediyesi'nin konut politikaları çerçevesinde hayata geçirilen projeler, bölgenin gelişimine önemli katkı sağlamaktadır.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Başakşehir Kültür Merkezi Modal -->
+    <div id="basaksehir-kultur-merkezi" class="modal">
+        <div class="modal-content">
+            <div class="modal-header" style="background-image: url('https://b6s54eznn8xq.merlincdn.net/Uploads/BranchImage/1184e3908c194c1aab3a9d8579cab2ae.jpg')">
+                <span class="close" onclick="closeModal('basaksehir-kultur-merkezi')">&times;</span>
+                <h2 class="modal-title">Başakşehir Kültür Merkezi</h2>
+            </div>
+            <div class="modal-body">
+                <div class="project-details">
+                    <div class="detail-item">
+                        <h4><i class="fas fa-map-marker-alt"></i> Konum</h4>
+                        <p>Başakşehir, İstanbul</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-ruler-combined"></i> Alan</h4>
+                        <p>2.800 m²</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-layer-group"></i> Kat Sayısı</h4>
+                        <p>4 kat</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-tools"></i> Proje Türü</h4>
+                        <p>Kültür Tesisi</p>
+                    </div>
+                </div>
+                <div class="project-description">
+                    <h3>Proje Hakkında</h3>
+                    <p>Başakşehir Kültür Merkezi, İstanbul Başakşehir'de 2.800 m² alana sahip 4 katlı kültür tesisidir.</p>
+                    <p>Bölge halkının kültürel ve sosyal ihtiyaçlarını karşılamak amacıyla inşa edilen tesis, modern mimarisi ve fonksiyonel tasarımı ile dikkat çekmektedir.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Kandıra Hastanesi Modal -->
+    <div id="kandira-hastanesi" class="modal">
+        <div class="modal-content">
+            <div class="modal-header" style="background-image: url('https://static.wixstatic.com/media/29e5f6_6f29ada97c5f4cbeb50fb7f31dfa7439~mv2.jpg/v1/fill/w_877,h_473,al_c,lg_1,q_85/29e5f6_6f29ada97c5f4cbeb50fb7f31dfa7439~mv2.jpg')">
+                <span class="close" onclick="closeModal('kandira-hastanesi')">&times;</span>
+                <h2 class="modal-title">Kandıra Devlet Hastanesi</h2>
+            </div>
+            <div class="modal-body">
+                <div class="project-details">
+                    <div class="detail-item">
+                        <h4><i class="fas fa-map-marker-alt"></i> Konum</h4>
+                        <p>Kandıra, Kocaeli</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-ruler-combined"></i> İnşaat Alanı</h4>
+                        <p>10.000 m²</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-bed"></i> Yatak Kapasitesi</h4>
+                        <p>50 yatak</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-tools"></i> Proje Türü</h4>
+                        <p>Sağlık Tesisi</p>
+                    </div>
+                </div>
+                <div class="project-description">
+                    <h3>Proje Hakkında</h3>
+                    <p>Kandıra Devlet Hastanesi, Kocaeli Kandıra'da 10.000 m² inşaat alanında 50 yataklı devlet hastanesi olarak inşa edilmiştir.</p>
+                    <p>Bölge halkının sağlık hizmetlerine erişimini kolaylaştırmak amacıyla gerçekleştirilen proje, modern tıbbi ekipmanları ve hasta odaklı tasarımı ile dikkat çekmektedir.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Kahramanmaraş Deprem Modal -->
+    <div id="kahramanmaras-deprem" class="modal">
+        <div class="modal-content">
+            <div class="modal-header" style="background-image: url('https://trthaberstatic.cdn.wp.trt.com.tr/resimler/2020000/deprem-konutlari-iha-2021453.jpg')">
+                <span class="close" onclick="closeModal('kahramanmaras-deprem')">&times;</span>
+                <h2 class="modal-title">Kahramanmaraş Emlak Konut Deprem Konutları</h2>
+            </div>
+            <div class="modal-body">
+                <div class="project-details">
+                    <div class="detail-item">
+                        <h4><i class="fas fa-map-marker-alt"></i> Konum</h4>
+                        <p>Kahramanmaraş</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-home"></i> Konut Sayısı</h4>
+                        <p>49.649 konut</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-store"></i> İş Yeri</h4>
+                        <p>790 iş yeri</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-calendar"></i> Tarih</h4>
+                        <p>6 Şubat 2023 sonrası</p>
+                    </div>
+                </div>
+                <div class="project-description">
+                    <h3>Proje Hakkında</h3>
+                    <p>Kahramanmaraş Emlak Konut Deprem Konutları, 6 Şubat 2023 depremi sonrası Kahramanmaraş'ta gerçekleştirilen büyük ölçekli afet konutları projesidir.</p>
+                    <p>49.649 konut ve 790 iş yerinden oluşan proje, depremzede vatandaşların barınma ihtiyaçlarını karşılamak amacıyla hızla hayata geçirilmektedir. Modern deprem yönetmeliklerine uygun olarak inşa edilen konutlar, güvenli yaşam alanları sunmaktadır.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Adıyaman Deprem Modal -->
+    <div id="adiyaman-deprem" class="modal">
+        <div class="modal-content">
+            <div class="modal-header" style="background-image: url('https://fotogaleri.star.com.tr/fotogaleri/maintmps/2024/07/10/100720244738-41.jpg')">
+                <span class="close" onclick="closeModal('adiyaman-deprem')">&times;</span>
+                <h2 class="modal-title">Adıyaman Emlak Konut Deprem Konutları</h2>
+            </div>
+            <div class="modal-body">
+                <div class="project-details">
+                    <div class="detail-item">
+                        <h4><i class="fas fa-map-marker-alt"></i> Konum</h4>
+                        <p>Adıyaman İndere</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-calendar"></i> Tarih</h4>
+                        <p>6 Şubat 2023 sonrası</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-tools"></i> Proje Türü</h4>
+                        <p>Afet Konutu</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-shield-alt"></i> Özellik</h4>
+                        <p>Depreme dayanıklı</p>
+                    </div>
+                </div>
+                <div class="project-description">
+                    <h3>Proje Hakkında</h3>
+                    <p>Adıyaman Emlak Konut Deprem Konutları, 6 Şubat 2023 depremi sonrası Adıyaman İndere'de gerçekleştirilen büyük ölçekli deprem konutları projesidir.</p>
+                    <p>Depremzede vatandaşların barınma ihtiyaçlarını karşılamak amacıyla modern deprem yönetmeliklerine uygun olarak inşa edilen konutlar, güvenli ve konforlu yaşam alanları sunmaktadır.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Torkam Malatya Modal -->
+    <div id="torkam-malatya" class="modal">
+        <div class="modal-content">
+            <div class="modal-header" style="background-image: url('https://www.ahesinsaat.com/uploads/images/toki-malatya-130-konut-yapim-isi-49363.jpg')">
+                <span class="close" onclick="closeModal('torkam-malatya')">&times;</span>
+                <h2 class="modal-title">Torkam Malatya Projesi Toplu Konutları</h2>
+            </div>
+            <div class="modal-body">
+                <div class="project-details">
+                    <div class="detail-item">
+                        <h4><i class="fas fa-map-marker-alt"></i> Konum</h4>
+                        <p>Malatya</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-home"></i> Konut Sayısı</h4>
+                        <p>8.065 konut</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-store"></i> Ticari Birim</h4>
+                        <p>301 ticari birim</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4><i class="fas fa-tools"></i> Proje Türü</h4>
+                        <p>TOKİ Projesi</p>
+                    </div>
+                </div>
+                <div class="project-description">
+                    <h3>Proje Hakkında</h3>
+                    <p>Torkam Malatya Projesi Toplu Konutları, Malatya genelinde 8.065 konut ve 301 ticari birimden oluşan büyük ölçekli TOKİ projesidir.</p>
+                    <p>Deprem sonrası yeniden yapılanma sürecinde önemli rol oynayan proje, modern yaşam standartlarını karşılayan konutlar ve ticari alanlar sunmaktadır. Bölgenin sosyal ve ekonomik kalkınmasına katkı sağlayan önemli bir yatırımdır.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2 class="section-title fade-in">İletişim</h2>
+            <div class="contact-content">
+                <div class="contact-info fade-in">
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h4>Adres</h4>
+                            <p>YENİŞEHİR MAH. MUSTAFA AKYOL SK. MVK SİTESİ A BLOK<br>
+                            NO: 13 İÇ KAPI NO: 199 PENDİK/ İSTANBUL</p>
+                        </div>
+                    </div>
+
+                    <!-- Telefon numarası kaldırıldı -->
+
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4>E-posta</h4>
+                            <p>muhasebe@etmmuhendislik.com.tr</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <h4>Çalışma Saatleri</h4>
+                            <p>Pazartesi - Cuma: 09:00 - 18:00<br>
+                            Cumartesi: 09:00 - 14:00</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-form fade-in">
+                    <form>
+                        <div class="form-group">
+                            <label for="name">Ad Soyad</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">E-posta</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Konu</label>
+                            <input type="text" id="subject" name="subject" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Mesaj</label>
+                            <textarea id="message" name="message" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Mesaj Gönder</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Binyapı Emlak Geliştirme İnşaat Ticaret Ltd. Şti. Tüm hakları saklıdır.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const navMenu = document.getElementById('nav-menu');
+
+        mobileMenuToggle.addEventListener('click', function() {
+            navMenu.classList.toggle('active');
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    // Close mobile menu if open
+                    navMenu.classList.remove('active');
+                }
+            });
+        });
+
+        // Fade in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Modal functions
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                const modals = document.querySelectorAll('.modal');
+                modals.forEach(modal => {
+                    if (modal.style.display === 'block') {
+                        modal.style.display = 'none';
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+            }
+        });
+
+        // Form submission
+        document.querySelector('.contact-form form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Mesajınız alındı! En kısa sürede size dönüş yapacağız.');
+            this.reset();
+        });
+
+        // Add loading animation
+        window.addEventListener('load', function() {
+            document.body.classList.add('loaded');
+        });
+    </script>
+</body>
+</html>
